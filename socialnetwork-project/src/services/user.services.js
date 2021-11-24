@@ -27,6 +27,11 @@ services.login = async (username, password) => {
 
 services.verifyToken = async (token) => {
 
+    //Prevent error message
+    if(localStorage.getItem("token") === "undefined"){
+        return {}
+    }
+    
     const response = await fetch(`${BASE_URL}/auth/whoami`,
     {
         headers: {
@@ -34,12 +39,12 @@ services.verifyToken = async (token) => {
         },
         method: "GET"
     });
-    
+
+       
     if(response.ok) {
         const data = await response.json();
         return data;
     }
-
     return {};
 }
 
