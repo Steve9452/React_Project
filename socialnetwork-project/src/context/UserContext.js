@@ -1,5 +1,6 @@
-import React, {useMemo, useContext, useState, useEffect, useCallback} from 'react';
-import userService from '../services/user.services'
+import React, {useMemo, useState, useEffect, useCallback} from 'react';
+import userService from '../services/user.services';
+
 const UserContext = React.createContext();
 const TOKEN_KEY = "token";
 
@@ -77,7 +78,7 @@ export const UserProvider = (props) => {
 };
 
 export const useUserContext = () => {
-    const context = useContext(UserContext);
+    const context = React.useContext(UserContext);
 
     if(!context){
         throw new Error("useContext error");

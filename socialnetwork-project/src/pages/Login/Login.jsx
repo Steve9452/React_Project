@@ -11,7 +11,7 @@ const Login = () => {
 
     const [error, setError] = useState(false);
     
-    const [ login, token ] = useUserContext();
+    const { login, token } = useUserContext();
 
     const onChange = (e, save) => {
         save(e.target.value);
@@ -19,7 +19,6 @@ const Login = () => {
     
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-
         const logged = await login(username, password);
 
         setError(!logged);
@@ -27,14 +26,15 @@ const Login = () => {
         setPassword("");
     };
 
-    // if(token) {
-    //     return <Navigate replace to = "/redirect" />
-    // }
+    if(token) {
+        
+        return <Navigate replace to = "/redirect" />
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-400 to-blue-500">
     <main className="w-3/4 max-w-3xl bg-blue-100 rounded-md p-8 md:p-10 shadow-md">
-      <form className="flex flex-col gap-4 items-center justify-center">
+      <form className="flex flex-col gap-4 items-center justify-center" onSubmit = {onSubmitHandler}>
         <h2 className="uppercase text-gray-800 font-monserrat font-black text-4xl mb-4">
           Prograweb
         </h2>
@@ -57,10 +57,7 @@ const Login = () => {
           placeholder="e.g password"
           onChange = {(e) => onChange( e, setPassword)}
         />
-        <button 
-        className="mt-6 w-full transition rounded border border-blue-500 duration-300 ease-in-out text-xl text-extrabold uppercase bg-blue-500 hover:bg-blue-700 py-2 px-4 text-gray-100"
-        onSubmit = {onSubmitHandler}
-        >
+        <button className="mt-6 w-full transition rounded border border-blue-500 duration-300 ease-in-out text-xl text-extrabold uppercase bg-blue-500 hover:bg-blue-700 py-2 px-4 text-gray-100">
           Sign In{" "}
         </button>
       </form>

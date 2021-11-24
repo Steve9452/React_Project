@@ -1,5 +1,5 @@
 const BASE_URL = "https://posts-pw2021.herokuapp.com/api/v1";
-const services = [];
+const services = {};
 
 
 services.login = async (username, password) => {
@@ -30,12 +30,12 @@ services.verifyToken = async (token) => {
     const response = await fetch(`${BASE_URL}/auth/whoami`,
     {
         headers: {
-            "Authorization" : `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
         },
         method: "GET"
     });
-
-    if(!response) {
+    
+    if(response.ok) {
         const data = await response.json();
         return data;
     }
