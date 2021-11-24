@@ -1,5 +1,5 @@
 import React, {useMemo, useContext, useState, useEffect, useCallback} from 'react';
-
+import userService from '../services/user.services'
 const UserContext = React.createContext();
 const TOKEN_KEY = "token";
 
@@ -13,7 +13,7 @@ export const UserProvider = (props) => {
             const lsToken = getToken();
             
             if(lsToken){
-                const { usename, role } = await userService.verifyToken(lsToken);
+                const { username, role } = await userService.verifyToken(lsToken);
 
                 if (username && role) {
                     setUser({ username, role });
@@ -34,7 +34,7 @@ export const UserProvider = (props) => {
     };
 
     const login = useCallback(
-        () => {
+        (username, password) => {
             const loginAsync = async () => {
                 let status = false;
 
