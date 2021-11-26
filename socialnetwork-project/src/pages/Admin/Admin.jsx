@@ -1,14 +1,23 @@
 import { useUserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import userService from "../../services/user.services.js"
 
 export default function Admin() {
   const navigate = useNavigate();
-  const { logout } = useUserContext();
+  const { logout , token} = useUserContext();
 
   const logoutHandler = () => {
     logout();
     navigate("/login");
   };
+
+
+  const getPost =  async () => {
+    const data = await userService.getAll(token,100,0);
+    console.error(token);
+    console.log(data);
+  }
+
 
   return (
     <section className="flex gap-4 flex-col lg:flex-row justify-around items-center p-6 lg:p-10 min-h-screen">
@@ -31,6 +40,7 @@ export default function Admin() {
         >
           Log out
         </button>
+        <button onClick = {getPost}>OK</button>
       </div>
 
       <div className="w-4/5 lg:w-1/2 flex justify-center items-center">
