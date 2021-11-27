@@ -5,17 +5,16 @@ import userService from "../../services/user.services.js"
 import React,{ useState, useEffect } from "react";
 
 import Post from './Post/Post'
-
+import { PagControl } from "./PagControls/PagControls";
 
 
 
 export default function Admin() {
   const navigate = useNavigate();
 
-  const { logout , token} = useUserContext();
+  const {logout , token} = useUserContext();
 
   const [posts, setPosts] = useState([])
-
   const [page, setPage] = useState(0)
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export default function Admin() {
 
     getPosts(page);
 
-  }, [page])
+  }, [page,token])
 
 
   //Funct
@@ -37,20 +36,11 @@ export default function Admin() {
     navigate("/login");
   };
 
-  //Render
-  
-
-  //Prototipes 
-  const nextPage = () => {
-    setPage(1);
+  const setCurrentPage = {
+    prev: () => {setPage(page - 1 )},
+    next: () => {setPage(page + 1)}
   }
 
-  const consol = () => {
-    console.log(posts)
-    posts.forEach((p) => {
-      console.log(p.title)
-    })
-  }
 
   // const renderPosts = filterPost.map( (post) => {
   //   <Post userName = {post.userName} title = {post.title} img = {post.img} like = {post.likes} description = {post.description}></Post>
@@ -60,12 +50,10 @@ export default function Admin() {
       <div>
         <nav>
           <ol>
+            <li><button onClick={() => {console.log(posts)}}>ConsoleTest</button></li>
             <li><button onClick = {logoutHandler}>LogOut</button></li>
           </ol>
         </nav>
-        
-        <button onClick = {nextPage}>Test</button>
-        <button onClick = {consol}>Console.log</button>
         <ul>
             {
               posts.map((p) => { 
@@ -75,13 +63,16 @@ export default function Admin() {
                     title = {p.title} 
                     img={p.image} 
                     description = {p.description} 
-                    likes = {p.likes.lenght} 
+                    likes = {p.likes} 
+                    comments = {p.comments}
                     key={p._id}
+                    
                   />
                 )               
               })
             }
         </ul>
+        <PagControl nextPage={setCurrentPage.next} prevPage={setCurrentPage.prev} firstpage={page === 0 ? true : false}/>
       </div>
   );
 }

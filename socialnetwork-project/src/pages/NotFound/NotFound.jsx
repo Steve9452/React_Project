@@ -10,7 +10,7 @@ const NotFound = () => {
 
     React.useEffect(() => {
         navigate("/login")
-    }, [])
+    }, [navigate])
     return (
         <div className="flex flex-col justify-center items-center w-screen h-screen bg-gray-200">
           <h2 className="text-6xl font-roboto text-center mb-6">404</h2>
