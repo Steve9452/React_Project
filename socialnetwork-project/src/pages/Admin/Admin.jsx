@@ -4,7 +4,7 @@ import userService from "../../services/user.services.js"
 
 import React,{ useState, useEffect } from "react";
 
-import Post from '../../Components/Post/Post'
+import Post from './Post/Post'
 
 
 
@@ -68,9 +68,18 @@ export default function Admin() {
         <button onClick = {consol}>Console.log</button>
         <ul>
             {
-            posts.map((p) => {
-              return(<Post userName={p.user.username} title = {p.title} img={p.image} description = {p.description} likes = {p.likes.lenght}/>)
-            })
+              posts.map((p) => { 
+                return (
+                  <Post 
+                    userName={p.user.username} 
+                    title = {p.title} 
+                    img={p.image} 
+                    description = {p.description} 
+                    likes = {p.likes.lenght} 
+                    key={p._id}
+                  />
+                )               
+              })
             }
         </ul>
       </div>
