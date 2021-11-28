@@ -54,7 +54,6 @@ export default function Admin() {
   }
 
   const likeHandler = async (_id) => {
-    console.log(_id)
     await queryServices.like(token,_id);
     setUpdate(!update);
 }
@@ -129,6 +128,17 @@ export default function Admin() {
               <p className="text-lg font-semibold text-left">Logout</p>
             </button>
           </li>
+          <li >
+            <button
+              onClick={() => {setDisplayAdminOnly(!displayAdminOnly)}}
+              className="flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5"
+            >
+              <icon className="text-2xl mr-4 text-left">
+                <FontAwesome.FaSignOutAlt />
+              </icon>
+              <p className="text-lg font-semibold text-left">Perfil</p>
+            </button>
+          </li>
           <li><button onClick={() => {console.log(posts)}}>ConsoleTest</button></li>
           <li><button onClick = {getAllFavs}>MostrarFavs</button></li>
           
@@ -148,33 +158,35 @@ export default function Admin() {
             <AdminOnly token={token} likeHandler = {likeHandler} patchFav = {patchFav} />
           )
         }
-        {/* {
+        {
           !displayAdminOnly && 
           (
-            
+            <ol>
+              {
+                posts.map((p) => {
+                return (
+
+                  <Post className="w-full p-4 border-b hover:bg-lighter flex"
+                    userName={p.user.username}
+                    title={p.title}
+                    userName={p.user.username}
+                    img={p.image}
+                    description={p.description}
+                    likes={p.likes}
+                    comments={p.comments}
+                    key={p._id}
+                    likeHandler = {likeHandler}
+                    patchFav = {patchFav}
+                    _id = {p._id}
+                  />
+
+                );
+                })
+              }
+            </ol>
           )
-        } */}
-        <ol>
-        {posts.map((p) => {
-          return (
-
-              <Post className="w-full p-4 border-b hover:bg-lighter flex"
-                userName={p.user.username}
-                title={p.title}
-                userName={p.user.username}
-                img={p.image}
-                description={p.description}
-                likes={p.likes}
-                comments={p.comments}
-                key={p._id}
-                likeHandler = {likeHandler}
-                patchFav = {patchFav}
-                _id = {p._id}
-              />
-
-          );
-        })}
-        </ol>
+        }
+        
         
         
       </ul>
