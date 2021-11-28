@@ -1,14 +1,19 @@
-import { useState } from "react";
-import userServices from '../../../services/user.services'
-const Post = ({userName,title,img,likes,description, comments}) => {
+import { useState, useEffect } from "react";
+import { useUserContext } from "../../../context/UserContext";
+import queryServices from '../../../services/query.services';
 
+const Post = ({_id,userName,title,img,likes,description, comments, setLike}) => {
+const { token } = useUserContext();
 
     const [toggleComments, settoggleComments] = useState(false);
 
+    const [update, setUpdate] = useState(true);
+    
+    // const [likes, setLikes] = useState(0);
+    // const {userName, title, img, likes, description} = post; 
+    const notFoundImg = "https://1080motion.com/wp-content/uploads/2018/06/NoImageFound.jpg.png";
 
     
-    // const {userName, title, img, likes, description} = post; 
-    const notFoundImg = "https://1080motion.com/wp-content/uploads/2018/06/NoImageFound.jpg.png"
     return(
         <li>
             <section>
@@ -22,12 +27,13 @@ const Post = ({userName,title,img,likes,description, comments}) => {
                 
                 <div> 
                     <section>
-                        <button>Like</button>
                         <p>{ likes.length }</p>
+                        <button 
+                            onClick={ () => {setLike(_id)}
+                                }>Like</button>
                         <button onClick={() => settoggleComments(!toggleComments)}>Ver comentarios</button>
                         {
-                            toggleComments && (comments.map((com) => {return <li><p>{com.description}</p></li>}))
-                                
+                            toggleComments && (comments.map((com) => {return <li key={Date.now()}><p>{com.user.username}</p><p>{com.description}</p></li>}))                                
                         }
                         <button>Ocultar Post</button>
                     </section>

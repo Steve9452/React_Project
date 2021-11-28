@@ -1,6 +1,7 @@
 import { useUserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import userService from "../../services/user.services.js"
+
+import queryServices from "../../services/query.services.js"
 
 import React,{ useState, useEffect } from "react";
 
@@ -17,16 +18,18 @@ export default function Admin() {
   const [posts, setPosts] = useState([])
   const [page, setPage] = useState(0)
 
+  const [update, setUpdate] = useState(true)
+
   useEffect(() => {
 
     const getPosts =  async (currentPage) => {
-      const data = await userService.getAll(token,10,currentPage);
+      const data = await queryServices.getAll(token,10,currentPage);
       setPosts(data.data);
     }
 
     getPosts(page);
 
-  }, [page,token])
+  }, [page,token, update])
 
 
   //Funct
@@ -41,6 +44,11 @@ export default function Admin() {
     next: () => {setPage(page + 1)}
   }
 
+  const setLike = (_id) => {
+    console.log("Like: " + _id )
+    queryServices.like(token,_id);
+    setUpdate(!update);
+}
 
   // const renderPosts = filterPost.map( (post) => {
   //   <Post userName = {post.userName} title = {post.title} img = {post.img} like = {post.likes} description = {post.description}></Post>
@@ -59,6 +67,7 @@ export default function Admin() {
               posts.map((p) => { 
                 return (
                   <Post 
+                    _id={p._id}
                     userName={p.user.username} 
                     title = {p.title} 
                     img={p.image} 
@@ -66,7 +75,7 @@ export default function Admin() {
                     likes = {p.likes} 
                     comments = {p.comments}
                     key={p._id}
-                    
+                    setLike = {setLike}
                   />
                 )               
               })

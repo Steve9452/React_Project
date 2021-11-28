@@ -48,20 +48,5 @@ services.verifyToken = async (token) => {
     return {};
 }
 
-services.getAll = async (token, limit, page) => {
 
-    const response = await fetch(`${BASE_URL}/post/all?limit=${limit}&page=${page}`,
-    {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    });
-
-    if(response.ok){
-        const data = await response.json();
-        return data;
-    }
-
-    return {};
-}
 export default services;
