@@ -31,9 +31,6 @@ services.like = async (token, _postId) => {
     if(!response.ok){
         alert("Error no es posible realizar dicha acción");
     }
-    else{
-        console.log(response)
-    }
 }
 
 services.patchFav = async (token, _postId) => {
@@ -46,9 +43,6 @@ services.patchFav = async (token, _postId) => {
     });
     if(!response.ok){
         alert("Error no es posible realizar dicha acción");
-    }
-    else{
-        console.log("Post agregado a favoritos")
     }
 }
 
