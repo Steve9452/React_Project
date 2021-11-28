@@ -44,11 +44,18 @@ export default function Admin() {
     next: () => {setPage(page + 1)}
   }
 
-  const setLike = (_id) => {
-    console.log("Like: " + _id )
+  const setLike = async (_id) => {
     queryServices.like(token,_id);
     setUpdate(!update);
 }
+  const patchFav = (_id) => {
+    queryServices.patchFav(token,_id);
+    // setUpdate(!update);
+  }
+
+  const getAllFavs = (_id) => {
+    queryServices.getFavs(token,_id)
+  }
 
   // const renderPosts = filterPost.map( (post) => {
   //   <Post userName = {post.userName} title = {post.title} img = {post.img} like = {post.likes} description = {post.description}></Post>
@@ -60,6 +67,7 @@ export default function Admin() {
           <ol>
             <li><button onClick={() => {console.log(posts)}}>ConsoleTest</button></li>
             <li><button onClick = {logoutHandler}>LogOut</button></li>
+            <li><button onClick = {getAllFavs}>MostrarFavs</button></li>
           </ol>
         </nav>
         <ul>
@@ -76,6 +84,7 @@ export default function Admin() {
                     comments = {p.comments}
                     key={p._id}
                     setLike = {setLike}
+                    patchFav = {patchFav}
                   />
                 )               
               })

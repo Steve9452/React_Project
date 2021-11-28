@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { useUserContext } from "../../../context/UserContext";
 import queryServices from '../../../services/query.services';
 
-const Post = ({_id,userName,title,img,likes,description, comments, setLike}) => {
-const { token } = useUserContext();
+const Post = ({_id,userName,title,img,likes,description, comments, setLike, patchFav}) => {
 
     const [toggleComments, settoggleComments] = useState(false);
 
-    const [update, setUpdate] = useState(true);
     
     // const [likes, setLikes] = useState(0);
     // const {userName, title, img, likes, description} = post; 
@@ -31,6 +29,7 @@ const { token } = useUserContext();
                         <button 
                             onClick={ () => {setLike(_id)}
                                 }>Like</button>
+                        <button onClick = { () => {patchFav(_id)}}>Add Favorite</button>
                         <button onClick={() => settoggleComments(!toggleComments)}>Ver comentarios</button>
                         {
                             toggleComments && (comments.map((com) => {return <li key={Date.now()}><p>{com.user.username}</p><p>{com.description}</p></li>}))                                
