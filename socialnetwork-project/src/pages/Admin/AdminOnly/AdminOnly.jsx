@@ -3,6 +3,7 @@ import { PagControl } from '../PagControls/PagControls';
 
 import queryServices from '../../../services/query.services'
 import { useState, useEffect } from 'react';
+import UpdateModule from "./UpdateModule/UpdateModule"
 
 const AdminOnly = ({token, likeHandler, patchFav}) => {
 
@@ -17,6 +18,8 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
   const [name, setName] = useState('');
 
   const [update, setUpdate] = useState(true);
+
+  const [displayModule, setDisplayModule] = useState(false);  
 
 
   useEffect(() => {
@@ -49,6 +52,7 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
 
     return(
         <>
+        <UpdateModule displayModule={displayModule} setDisplayModule={setDisplayModule}/>
         <div className="px-5 py-3 border-b-8 border-lighter flex">
               <form onSubmit={onSubmitHandler} className="w-full px-4 relative">
                   <input  type="text" name="title" value={title} placeholder="Titulo de post" className="w-full focus:outline-none mt-3" onChange={(e) => {handleOnChange(e, setTitle)}} />
@@ -86,6 +90,8 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
                 _id = {p._id}
                 toggletActive = {toggletActive}
                 active ={p.active}
+                isModifiedAble={true}
+                setDisplayModule ={setDisplayModule}
               />
           );
         })}

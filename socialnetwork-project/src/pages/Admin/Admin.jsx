@@ -189,6 +189,8 @@ export default function Admin() {
                     toggletActive = {toggletActive}
                     _id = {p._id}
                     active = {p.active}
+                    isModifiedAble ={false}
+                    setDisplayModule = {() => {}}
                   />
 
                 );
