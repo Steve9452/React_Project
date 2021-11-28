@@ -205,11 +205,14 @@ export default function Admin() {
           </ol>
         )}
       </ul>
-      <div className="w-1/6 h-full border-l border-lighter py-2 my-5">
+      <div className=" w-1/6 h-full border-l border-lighter py-2 my-5">
         <input
           className="rounded-full w-full p-2 bg-lighter ml-10 bg-gray-200 border-gray-200"
           placeholder="Buscar Favorito"
         />
+        <button className="flex self-center m-auto py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5 bg-blue-300">
+          Buscar
+        </button>
       </div>
       <PagControl
         nextPage={setCurrentPage.next}
