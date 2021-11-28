@@ -4,8 +4,9 @@ import queryServices from '../../../services/query.services';
 import * as FontAwesome from 'react-icons/fa';
 
 import AdminOnly from "../AdminOnly";
-const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, patchFav, toggletActive, active, isModifiedAble, setDisplayModule}) => {
+const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, patchFav, toggletActive, active, isModifiedAble, setDisplayModule,setPostToModify}) => {
 
+  
   // const {userName, title, img, likes, description} = post;
   const [toggleComments, settoggleComments] = useState(false);
     
@@ -46,7 +47,17 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
               <button onClick={() => settoggleComments(!toggleComments)}>
                 Ver comentarios
               </button>
-              {isModifiedAble && <button onClick={() => setDisplayModule(true)}>Edit</button>}
+              {isModifiedAble && <button onClick={() => 
+                {
+                  setDisplayModule(true)
+                  setPostToModify(
+                    {
+                      _id:_id,
+                      title:title,
+                      img: img,
+                      description : description
+                    })
+                  } }>Edit</button>}
             </div>
 
             {

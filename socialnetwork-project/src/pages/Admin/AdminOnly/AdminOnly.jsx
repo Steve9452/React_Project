@@ -21,7 +21,12 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
 
   const [displayModule, setDisplayModule] = useState(false);  
 
-
+  const [postToModify, setPostToModify] = useState({
+    _id : 0,
+    title : "",
+    img : "",
+    description : ""
+  })
   useEffect(() => {
     
     const getOwnPost = async (currentPage) => {
@@ -52,7 +57,7 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
 
     return(
         <>
-        <UpdateModule displayModule={displayModule} setDisplayModule={setDisplayModule}/>
+        <UpdateModule token = {token} displayModule={displayModule} setDisplayModule={setDisplayModule} title={postToModify.title} _id={postToModify._id} description={postToModify.description} img ={postToModify.img} renderMainPage ={setUpdate} renderMainPageStatus ={update}/>
         <div className="px-5 py-3 border-b-8 border-lighter flex">
               <form onSubmit={onSubmitHandler} className="w-full px-4 relative">
                   <input  type="text" name="title" value={title} placeholder="Titulo de post" className="w-full focus:outline-none mt-3" onChange={(e) => {handleOnChange(e, setTitle)}} />
@@ -92,6 +97,7 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
                 active ={p.active}
                 isModifiedAble={true}
                 setDisplayModule ={setDisplayModule}
+                setPostToModify = {setPostToModify}
               />
           );
         })}
