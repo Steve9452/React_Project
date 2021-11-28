@@ -5,7 +5,7 @@ export const PagControl = ({ nextPage, prevPage, firstpage }) => {
         <button
           type="button"
           onClick={prevPage}
-          className="text-white bg-blue-500 rounded-full font-semibold p-3 hover:bg-blue-900 fixed bottom-10 left-10"
+          className="text-white bg-blue-500 rounded font-semibold p-3 hover:bg-blue-900 fixed bottom-10 left-10"
         >
           {'<<'} Prev
         </button>
@@ -13,7 +13,7 @@ export const PagControl = ({ nextPage, prevPage, firstpage }) => {
       <button
         type="button"
         onClick={nextPage}
-        className="text-white bg-blue-500 rounded-full font-semibold p-3 hover:bg-blue-900 fixed bottom-10 right-10"
+        className="text-white bg-blue-500 rounded font-semibold p-3 hover:bg-blue-900 fixed bottom-10 right-10"
       >
         Next {'>>'}{' '}
       </button>
