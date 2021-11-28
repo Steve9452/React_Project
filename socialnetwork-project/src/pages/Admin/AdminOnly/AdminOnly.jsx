@@ -16,16 +16,13 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
 
   const [name, setName] = useState('');
 
-  const [update, setUpdate] = useState(true)
-  const setCurrentPage = {
-    prev: () => {setPage(page - 1 )},
-    next: () => {setPage(page + 1)}
-  }
+  const [update, setUpdate] = useState(true);
+
 
   useEffect(() => {
     
     const getOwnPost = async (currentPage) => {
-      const data = await queryServices.getOwned(token, 10, currentPage);
+      const data = await queryServices.getOwned(token, 30, currentPage);
       setPosts(data.data);
     };
 
@@ -71,6 +68,7 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
               </form>
             </div>
         <ol>
+          <h2 className="h-10 px-4 text-white bg-blue-500 font-semibold rounded text-align-center text-center text-2xl">Mis Post</h2>
         {posts.map((p) => {
           return (
 
@@ -89,15 +87,9 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
                 toggletActive = {toggletActive}
                 active ={p.active}
               />
-
           );
         })}
         </ol>
-        <PagControl
-        nextPage={setCurrentPage.next}
-        prevPage={setCurrentPage.prev}
-        firstpage={page === 0 ? true : false}
-      />
       </>
     );
 }
