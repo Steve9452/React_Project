@@ -9,7 +9,7 @@ import Post from './Post/Post'
 import { PagControl } from "./PagControls/PagControls";
 import Search from "./Search/Search";
 
-
+import userSevices from "../../services/user.services"
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function Admin() {
 
     getPosts(page);
 
-  }, [page,token, update])
+  }, [page, token, update])
 
   //Funct
 
@@ -48,13 +48,12 @@ export default function Admin() {
     next: () => {setPage(page + 1)}
   }
 
-  const setLike = (_id) => {
-    console.log("Like: " + _id )
+  const likeHandler = (_id) => {
     queryServices.like(token,_id);
     setUpdate(!update);
 }
   const favHandler = async () => {
-    const favoritesfetch = await queryServices.getAllFavorites(token);
+    const favoritesfetch = await userSevices.getAllFavorites(token);
     setFavorites(favoritesfetch);
 
     const newFavoritePosts = [];
@@ -72,9 +71,14 @@ export default function Admin() {
         getId = allposts[i]._id
       }
     }
-    const Post = await queryServices.getOne(token, getId);
+    const Post = await userSevices.getOne(token, getId);
     setSearchedPost(Post);
 
+  }
+
+  const patchFav = async (_id) => {
+    queryServices.patchFavorite(token,_id);
+    setUpdate(!update);
   }
 
 
@@ -146,7 +150,8 @@ export default function Admin() {
                     likes = {p.likes} 
                     comments = {p.comments}
                     key={p._id}
-                    setLike = {setLike}
+                    likeHandler = {likeHandler}
+                    patchFav = {patchFav}
                   />
                 )               
               })

@@ -1,5 +1,3 @@
-import { useUserContext } from "../context/UserContext";
-
 const BASE_URL = "https://posts-pw2021.herokuapp.com/api/v1";
 const services = {};
 
@@ -24,6 +22,19 @@ services.getAll = async (token,limit, page) => {
 
 services.like = async (token, _postId) => {
     const response = await fetch(`${BASE_URL}/post/like/${_postId}`,
+    {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        method : "PATCH"
+    });
+    if(!response.ok){
+        alert("Error no es posible realizar dicha acción");
+    }
+}
+
+services.patchFavorite = async (token, _postId) => {
+    const response = await fetch(`${BASE_URL}/post/fav/${_postId}`,
     {
         headers: {
             "Authorization": `Bearer ${token}`
