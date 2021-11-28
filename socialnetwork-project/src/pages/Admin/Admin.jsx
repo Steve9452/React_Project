@@ -1,62 +1,63 @@
-import { useUserContext } from "../../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useUserContext } from '../../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
-import queryServices from "../../services/query.services.js"
+import queryServices from '../../services/query.services.js';
 
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import Post from './Post/Post'
-import { PagControl } from "./PagControls/PagControls";
-import Search from "./Search/Search";
+import Post from './Post/Post';
+import { PagControl } from './PagControls/PagControls';
+import Search from './Search/Search';
 
-import userSevices from "../../services/user.services"
+import userSevices from '../../services/user.services';
 import * as FontAwesome from 'react-icons/fa';
 
 import { Navigate } from 'react-router';
-import AdminOnly from "./AdminOnly/AdminOnly";
+import AdminOnly from './AdminOnly/AdminOnly';
 
 export default function Admin() {
   const navigate = useNavigate();
 
   const { logout, token } = useUserContext();
 
-  const [posts, setPosts] = useState([])
-  const [page, setPage] = useState(0)
-  const [allposts, setAllPosts] = useState([])
-  const [favoriteposts, setFavoritePosts] = useState([])
-  const [searchedpost, setSearchedPost] = useState(undefined)
+  const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(0);
+  const [allposts, setAllPosts] = useState([]);
+  const [favoriteposts, setFavoritePosts] = useState([]);
+  const [searchedpost, setSearchedPost] = useState(undefined);
 
-  const [update, setUpdate] = useState(true)
+  const [update, setUpdate] = useState(true);
 
   const [displayAdminOnly, setDisplayAdminOnly] = useState(false);
 
   useEffect(() => {
-
-    const getPosts =  async (currentPage) => {
-      const data = await queryServices.getAll(token,10,currentPage);
+    const getPosts = async (currentPage) => {
+      const data = await queryServices.getAll(token, 10, currentPage);
       setPosts(data.data);
     };
 
     getPosts(page);
-
-  }, [page, token, update])
+  }, [page, token, update]);
 
   //Funct
 
   const logoutHandler = () => {
     logout();
-    
   };
 
   const setCurrentPage = {
-    prev: () => {setPage(page - 1 )},
-    next: () => {setPage(page + 1)}
-  }
+    prev: () => {
+      setPage(page - 1);
+    },
+    next: () => {
+      setPage(page + 1);
+    },
+  };
 
   const likeHandler = async (_id) => {
-    await queryServices.like(token,_id);
+    await queryServices.like(token, _id);
     setUpdate(!update);
-}
+  };
   const favHandler = async () => {
     const favoritesfetch = await userSevices.getAllFavorites(token);
 
@@ -66,40 +67,39 @@ export default function Admin() {
     console.log(allposts.length);
     console.log(favoritesfetch.favorites.length)
     */
-    for(let i=0; i<allposts.length; i++) {
-      if(favoritesfetch.favorites.includes(allposts[i]._id)){
-        newFavoritePosts.push(allposts[i])
+    for (let i = 0; i < allposts.length; i++) {
+      if (favoritesfetch.favorites.includes(allposts[i]._id)) {
+        newFavoritePosts.push(allposts[i]);
       }
     }
     console.log(newFavoritePosts);
     setFavoritePosts(newFavoritePosts);
-  }
+  };
 
   const OnSearchHandler = async (name) => {
     let getId = undefined;
-    for(let i=0; i<allposts.length; i++) {
-      if(allposts[i].title === name){
-        getId = allposts[i]._id
+    for (let i = 0; i < allposts.length; i++) {
+      if (allposts[i].title === name) {
+        getId = allposts[i]._id;
       }
     }
     const Post = await userSevices.getOne(token, getId);
     setSearchedPost(Post);
-
-  }
+  };
 
   const patchFav = (_id) => {
-    queryServices.patchFav(token,_id);
+    queryServices.patchFav(token, _id);
     // setUpdate(!update);
-  }
+  };
 
   const getAllFavs = (_id) => {
-    queryServices.getFavs(token,_id)
-  }
+    queryServices.getFavs(token, _id);
+  };
 
   const toggletActive = async (_id) => {
-    await queryServices.toggleActive(token,_id);
-    setUpdate(!update)
-  }
+    await queryServices.toggleActive(token, _id);
+    setUpdate(!update);
+  };
 
   // const renderPosts = filterPost.map( (post) => {
   //   <Post userName = {post.userName} title = {post.title} img = {post.img} like = {post.likes} description = {post.description}></Post>
@@ -122,7 +122,7 @@ export default function Admin() {
               <p className="text-lg font-semibold text-left">Home</p>
             </button>
           </li>
-          <li >
+          <li>
             <button
               onClick={logoutHandler}
               className="flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5"
@@ -133,14 +133,17 @@ export default function Admin() {
               <p className="text-lg font-semibold text-left">Logout</p>
             </button>
           </li>
-          <li >
+          <li>
             <button
-              onClick={() => 
-                {
-                  setDisplayAdminOnly(!displayAdminOnly) 
-                setUpdate(!update)
+              onClick={() => {
+                setDisplayAdminOnly(!displayAdminOnly);
+                setUpdate(!update);
               }}
-              className={displayAdminOnly ? "flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5 bg-blue-300" : "flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5"}
+              className={
+                displayAdminOnly
+                  ? 'flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5 bg-blue-300'
+                  : 'flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5'
+              }
             >
               <icon className="text-2xl mr-4 text-left">
                 <FontAwesome.FaSignOutAlt />
@@ -148,9 +151,18 @@ export default function Admin() {
               <p className="text-lg font-semibold text-left">Administracion</p>
             </button>
           </li>
-          <li><button onClick={() => {console.log(posts)}}>ConsoleTest</button></li>
-          <li><button onClick = {getAllFavs}>MostrarFavs</button></li>
-          
+          <li>
+            <button
+              onClick={() => {
+                console.log(posts);
+              }}
+            >
+              ConsoleTest
+            </button>
+          </li>
+          <li>
+            <button onClick={getAllFavs}>MostrarFavs</button>
+          </li>
         </ol>
       </nav>
       <ul className="w-3/4 h-full overflow-y-scroll">
@@ -160,46 +172,38 @@ export default function Admin() {
             <FontAwesome.FaNewspaper />
           </icon>
         </div>
-              
-        {
-          displayAdminOnly && 
-          (
-            <AdminOnly token={token} likeHandler = {likeHandler} patchFav = {patchFav} />
-          )
-        }
-        {
-          !displayAdminOnly && 
-          (
-            <ol>
-              {
-                posts.map((p) => {
-                return (
 
-                  <Post className="w-full p-4 border-b hover:bg-lighter flex"
-                    userName={p.user.username}
-                    title={p.title}
-                    userName={p.user.username}
-                    img={p.image}
-                    description={p.description}
-                    likes={p.likes}
-                    comments={p.comments}
-                    key={p._id}
-                    likeHandler = {likeHandler}
-                    patchFav = {patchFav}
-                    toggletActive = {toggletActive}
-                    _id = {p._id}
-                    active = {p.active}
-                  />
-
-                );
-                })
-              }
-            </ol>
-          )
-        }
-        
-        
-        
+        {displayAdminOnly && (
+          <AdminOnly
+            token={token}
+            likeHandler={likeHandler}
+            patchFav={patchFav}
+          />
+        )}
+        {!displayAdminOnly && (
+          <ol>
+            {posts.map((p) => {
+              return (
+                <Post
+                  className="w-full p-4 border-b hover:bg-lighter flex"
+                  userName={p.user.username}
+                  title={p.title}
+                  userName={p.user.username}
+                  img={p.image}
+                  description={p.description}
+                  likes={p.likes}
+                  comments={p.comments}
+                  key={p._id}
+                  likeHandler={likeHandler}
+                  patchFav={patchFav}
+                  toggletActive={toggletActive}
+                  _id={p._id}
+                  active={p.active}
+                />
+              );
+            })}
+          </ol>
+        )}
       </ul>
       <div className="w-1/6 h-full border-l border-lighter py-2 my-5">
         <input
