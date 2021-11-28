@@ -33,7 +33,7 @@ services.like = async (token, _postId) => {
     }
 }
 
-services.patchFavorite = async (token, _postId) => {
+services.patchFav = async (token, _postId) => {
     const response = await fetch(`${BASE_URL}/post/fav/${_postId}`,
     {
         headers: {
@@ -44,5 +44,24 @@ services.patchFavorite = async (token, _postId) => {
     if(!response.ok){
         alert("Error no es posible realizar dicha acción");
     }
+    else{
+        console.log("Post agregado a favoritos")
+    }
+}
+
+
+services.getFavs = async (token ) => {
+    const response = await fetch(`${BASE_URL}/post/fav`,
+    {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        method : "GET"
+    });
+    if(response.ok){
+        const data = await response.json();
+        console.log(data);
+    }
+
 }
 export default services;

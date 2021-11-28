@@ -30,7 +30,7 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
                         <button 
                             onClick={ () => {likeHandler(_id)}
                                 }>Like</button>
-                        <button onClick={patchFav(_id)}>Favorito</button>
+                        <button onClick = { () => {patchFav(_id)}}>Add Favorite</button>
                         <button onClick={() => settoggleComments(!toggleComments)}>Ver comentarios</button>
                         {
                             toggleComments && (comments.map((com) => {return <li key={Date.now()}><p>{com.user.username}</p><p>{com.description}</p></li>}))                                
