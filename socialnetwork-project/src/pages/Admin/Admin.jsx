@@ -45,39 +45,75 @@ export default function Admin() {
   // });
 
   return (
-    <div className="flex place-items-center bg-gray-light">
-      <nav>
+    <div className="flex container h-screen w-full">
+      <nav className="lg:w-1/5 border-r border-lighter lpx-2 g:px-8 py-10 my-10 mx-10">
         <ol>
           <li>
             <button
               onClick={() => {
                 console.log(posts);
               }}
-              className="mt-6 w-30 transition rounded-full border border-black duration-300 ease-in-out text-xl text-extrabold uppercase bg-black hover:bg-blue-700 py-2 px-4 text-gray-100 "
+              className="flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto"
             >
-              ConsoleTest
+              <icon className="text-2xl mr-4 text-left">#</icon>
+              <p className="text-lg font-semibold text-left">Home</p>
             </button>
           </li>
           <li>
-            <button onClick={logoutHandler}>LogOut</button>
+            <button
+              onClick={logoutHandler}
+              className="flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5"
+            >
+              <icon className="text-2xl mr-4 text-left">-</icon>
+              <p className="text-lg font-semibold text-left">Logout</p>
+            </button>
+          </li>
+          <li>
+            {/* <button
+              onClick={''}
+              className="text-white bg-blue-500 rounded-full font-semibold w-1/2 h-12 lg:h-auto p-3 hover:bg-blue-900"
+            >
+              Post
+            </button> */}
           </li>
         </ol>
       </nav>
-      <ul>
+      <ul className="w-3/4 h-full overflow-y-scroll">
+        <div className="px-5 py-3 border-b border-lighter items-center justify-between">
+          <h1 className="text-xl font-bold"> Actualidad </h1>
+        </div>
+        <div className="px-5 py-3 border-b-8 border-lighter flex">
+          <form className="w-full px-4 relative">
+            <textarea
+              placeholder="Post Here"
+              className="w-full focus:outline-none mt-3"
+            />
+            <div className="flex items-center">
+              {/* <icon className="text-lg text-blue mx-6"></icon> */}
+            </div>
+            <button className="h-10 px-4 text-white font-semibold bg-blue-500 hover:bg-blue-900 focus:outline-note rounded-full absolute bottom-0 right-0">
+              {' '}
+              Post{' '}
+            </button>
+          </form>
+        </div>
         {posts.map((p) => {
           return (
-            <Post
-              userName={p.user.username}
-              title={p.title}
-              img={p.image}
-              description={p.description}
-              likes={p.likes}
-              comments={p.comments}
-              key={p._id}
-            />
+            <div className="w-full p-4 border-b hover:bg-lighter flex">
+              <Post
+                userName={p.user.username}
+                title={p.title}
+                img={p.image}
+                description={p.description}
+                likes={p.likes}
+                comments={p.comments}
+                key={p._id}
+              />
+            </div>
           );
         })}
       </ul>
+
       <PagControl
         nextPage={setCurrentPage.next}
         prevPage={setCurrentPage.prev}
