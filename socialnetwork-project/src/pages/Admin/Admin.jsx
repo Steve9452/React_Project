@@ -20,7 +20,6 @@ export default function Admin() {
 
   const [posts, setPosts] = useState([])
   const [page, setPage] = useState(0)
-  const [favorites, setFavorites] = useState([])
   const [allposts, setAllPosts] = useState([])
   const [favoriteposts, setFavoritePosts] = useState([])
   const [searchedpost, setSearchedPost] = useState(undefined)
@@ -56,13 +55,19 @@ export default function Admin() {
 }
   const favHandler = async () => {
     const favoritesfetch = await userSevices.getAllFavorites(token);
-    setFavorites(favoritesfetch);
 
     const newFavoritePosts = [];
-    for(let i=0; i<favorites.length; i++) {
-      let filtered = allposts.filter(dat => dat._id === favorites[i])
-      newFavoritePosts.push(filtered);
+    /*
+    console.log(favoritesfetch);
+    console.log(allposts.length);
+    console.log(favoritesfetch.favorites.length)
+    */
+    for(let i=0; i<allposts.length; i++) {
+      if(favoritesfetch.favorites.includes(allposts[i]._id)){
+        newFavoritePosts.push(allposts[i])
+      }
     }
+    console.log(newFavoritePosts);
     setFavoritePosts(newFavoritePosts);
   }
 
