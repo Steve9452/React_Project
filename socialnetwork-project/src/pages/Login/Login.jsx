@@ -29,7 +29,7 @@ const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-700 relative overflow-hidden backdrop-filter backdrop-opacity-25">
+    <div className="flex justify-center items-center min-h-screen bg-gray-200 relative overflow-hidden backdrop-filter backdrop-opacity-25">
       <main className="w-2/4 max-w-3xl h-2/4 bg-gradient-to-r from-red-400 to-pink-200  rounded-md absolute p-8 md:p-10 shadow-2xl">
         <form
           className="flex flex-col gap-4 items-center justify-center"
