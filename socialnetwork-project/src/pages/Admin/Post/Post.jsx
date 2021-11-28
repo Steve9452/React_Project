@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useUserContext } from "../../../context/UserContext";
 import queryServices from '../../../services/query.services';
 import * as FontAwesome from 'react-icons/fa';
+
+import AdminOnly from "../AdminOnly";
 const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, patchFav}) => {
 
   // const {userName, title, img, likes, description} = post;

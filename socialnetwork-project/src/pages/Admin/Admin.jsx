@@ -12,6 +12,8 @@ import Search from "./Search/Search";
 import userSevices from "../../services/user.services"
 import * as FontAwesome from 'react-icons/fa';
 
+import { Navigate } from 'react-router';
+import AdminOnly from "./AdminOnly";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -25,6 +27,8 @@ export default function Admin() {
   const [searchedpost, setSearchedPost] = useState(undefined)
 
   const [update, setUpdate] = useState(true)
+
+  const [displayAdminOnly, setDisplayAdminOnly] = useState(true);
 
   useEffect(() => {
 
@@ -41,7 +45,7 @@ export default function Admin() {
 
   const logoutHandler = () => {
     logout();
-    navigate('/login');
+    
   };
 
   const setCurrentPage = {
@@ -136,21 +140,16 @@ export default function Admin() {
           </icon>
         </div>
 
-        <div className="px-5 py-3 border-b-8 border-lighter flex">
-        <form className="w-full px-4 relative">
-            <textarea
-              placeholder="Post Here"
-              className="w-full focus:outline-none mt-3"
-            />
-            <div className="flex items-center">
-              {/* <icon className="text-lg text-blue mx-6"></icon> */}
-            </div>
-            <button className="h-10 px-4 text-white font-semibold bg-blue-500 hover:bg-blue-900 focus:outline-note rounded absolute bottom-0 right-0">
-              Post
-            </button>
-          </form>
-        </div>
-        <ol>
+        {
+          displayAdminOnly && 
+          (
+            <AdminOnly/>
+          )
+        }
+        {
+          !displayAdminOnly && 
+          (
+            <ol>
         {posts.map((p) => {
           return (
 
@@ -171,6 +170,9 @@ export default function Admin() {
           );
         })}
         </ol>
+          )
+        }
+        
         
       </ul>
       <div className="w-1/6 h-full border-l border-lighter py-2 my-5">
