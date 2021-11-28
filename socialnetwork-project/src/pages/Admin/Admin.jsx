@@ -13,7 +13,7 @@ import userSevices from "../../services/user.services"
 import * as FontAwesome from 'react-icons/fa';
 
 import { Navigate } from 'react-router';
-import AdminOnly from "./AdminOnly";
+import AdminOnly from "./AdminOnly/AdminOnly";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function Admin() {
 
   const [update, setUpdate] = useState(true)
 
-  const [displayAdminOnly, setDisplayAdminOnly] = useState(true);
+  const [displayAdminOnly, setDisplayAdminOnly] = useState(false);
 
   useEffect(() => {
 
@@ -54,6 +54,7 @@ export default function Admin() {
   }
 
   const likeHandler = async (_id) => {
+    console.log(_id)
     await queryServices.like(token,_id);
     setUpdate(!update);
 }
@@ -130,6 +131,7 @@ export default function Admin() {
           </li>
           <li><button onClick={() => {console.log(posts)}}>ConsoleTest</button></li>
           <li><button onClick = {getAllFavs}>MostrarFavs</button></li>
+          
         </ol>
       </nav>
       <ul className="w-3/4 h-full overflow-y-scroll">
@@ -139,17 +141,20 @@ export default function Admin() {
             <FontAwesome.FaNewspaper />
           </icon>
         </div>
-
+              
         {
           displayAdminOnly && 
           (
-            <AdminOnly/>
+            <AdminOnly token={token} likeHandler = {likeHandler} patchFav = {patchFav} />
           )
         }
-        {
+        {/* {
           !displayAdminOnly && 
           (
-            <ol>
+            
+          )
+        } */}
+        <ol>
         {posts.map((p) => {
           return (
 
@@ -170,8 +175,6 @@ export default function Admin() {
           );
         })}
         </ol>
-          )
-        }
         
         
       </ul>

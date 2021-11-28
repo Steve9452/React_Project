@@ -64,4 +64,44 @@ services.getFavs = async (token ) => {
     }
 
 }
+
+services.getOwned = async (token,limit, page) => {
+
+    const response = await fetch(`${BASE_URL}/post/owned?limit=${limit}&page=${page}`,
+    {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if(response.ok){
+        const data = await response.json();
+        return data;
+    }
+
+    return {};
+}
+
+services.CreatePost = async (token, title, description, image) => {
+    const response = await fetch(`${BASE_URL}/post/create`,
+    {
+        headers:{
+            "Content-Type" : "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        method: "POST",
+        body: JSON.stringify({
+            title: title,
+            description: description,
+            image: image
+        })
+    });
+
+    if(response.ok){
+        const data = await response.json();
+        return data;
+    }
+
+    return {};
+}
 export default services;
