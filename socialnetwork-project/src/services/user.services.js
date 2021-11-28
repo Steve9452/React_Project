@@ -48,5 +48,52 @@ services.verifyToken = async (token) => {
     return {};
 }
 
+services.getAll = async (token, limit, page) => {
+    const response = await fetch(`${BASE_URL}/post/all?limit=${limit}&page=${page}`,
+    {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if(response.ok){
+        const data = await response.json();
+        return data;
+    }
+
+    return {};
+}
+
+services.getAllFavorites = async (token) => {
+    const response = await fetch(`${BASE_URL}/post/fav`,
+    {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if(response.ok){
+        const data = await response.json();
+        return data;
+    }
+
+    return {};
+}
+
+services.getOne = async (token, id) => {
+    const response = await fetch(`${BASE_URL}/post/one/${id}`,
+    {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if(response.ok){
+        const data = await response.json();
+        return data;
+    }
+
+    return {};
+}
 
 export default services;
