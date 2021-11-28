@@ -17,7 +17,6 @@ export default function Admin() {
 
   const [posts, setPosts] = useState([])
   const [page, setPage] = useState(0)
-  const [favorites, setFavorites] = useState([])
   const [allposts, setAllPosts] = useState([])
   const [favoriteposts, setFavoritePosts] = useState([])
   const [searchedpost, setSearchedPost] = useState(undefined)
@@ -36,7 +35,7 @@ export default function Admin() {
   useEffect(() => {
 
     const getPosts =  async () => {
-      const data = await userService.getAll(token,100,0);
+      const data = await userService.getAll(token,1000,0);
       setAllPosts(data.data);
     }
 
@@ -57,13 +56,19 @@ export default function Admin() {
 
   const favHandler = async () => {
     const favoritesfetch = await userService.getAllFavorites(token);
-    setFavorites(favoritesfetch);
 
     const newFavoritePosts = [];
-    for(let i=0; i<favorites.length; i++) {
-      let filtered = allposts.filter(dat => dat._id === favorites[i])
-      newFavoritePosts.push(filtered);
+    /*
+    console.log(favoritesfetch);
+    console.log(allposts.length);
+    console.log(favoritesfetch.favorites.length)
+    */
+    for(let i=0; i<allposts.length; i++) {
+      if(favoritesfetch.favorites.includes(allposts[i]._id)){
+        newFavoritePosts.push(allposts[i])
+      }
     }
+    console.log(newFavoritePosts);
     setFavoritePosts(newFavoritePosts);
   }
 
@@ -90,7 +95,6 @@ export default function Admin() {
           <ol>
             <li><button onClick={() => {console.log(posts)}}>ConsoleTest</button></li>
             <li><button onClick = {logoutHandler}>LogOut</button></li>
-            <li><button onClick={() => {console.log(favorites)}}>ConsoleFavTest</button></li>
           </ol>
         </nav>
 
