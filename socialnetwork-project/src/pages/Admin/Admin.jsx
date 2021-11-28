@@ -96,6 +96,11 @@ export default function Admin() {
     queryServices.getFavs(token,_id)
   }
 
+  const toggletActive = async (_id) => {
+    await queryServices.toggleActive(token,_id);
+    setUpdate(!update)
+  }
+
   // const renderPosts = filterPost.map( (post) => {
   //   <Post userName = {post.userName} title = {post.title} img = {post.img} like = {post.likes} description = {post.description}></Post>
   // });
@@ -130,13 +135,17 @@ export default function Admin() {
           </li>
           <li >
             <button
-              onClick={() => {setDisplayAdminOnly(!displayAdminOnly)}}
-              className="flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5"
+              onClick={() => 
+                {
+                  setDisplayAdminOnly(!displayAdminOnly) 
+                setUpdate(!update)
+              }}
+              className={displayAdminOnly ? "flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5 bg-blue-300" : "flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5"}
             >
               <icon className="text-2xl mr-4 text-left">
                 <FontAwesome.FaSignOutAlt />
               </icon>
-              <p className="text-lg font-semibold text-left">Perfil</p>
+              <p className="text-lg font-semibold text-left">Administracion</p>
             </button>
           </li>
           <li><button onClick={() => {console.log(posts)}}>ConsoleTest</button></li>
@@ -177,7 +186,9 @@ export default function Admin() {
                     key={p._id}
                     likeHandler = {likeHandler}
                     patchFav = {patchFav}
+                    toggletActive = {toggletActive}
                     _id = {p._id}
+                    active = {p.active}
                   />
 
                 );

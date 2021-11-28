@@ -4,7 +4,7 @@ import queryServices from '../../../services/query.services';
 import * as FontAwesome from 'react-icons/fa';
 
 import AdminOnly from "../AdminOnly";
-const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, patchFav}) => {
+const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, patchFav, toggletActive, active}) => {
 
   // const {userName, title, img, likes, description} = post;
   const [toggleComments, settoggleComments] = useState(false);
@@ -52,7 +52,7 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
                 toggleComments && (comments.map((com) => {return <li key={Date.now()}><p>{com.user.username}</p><p>{com.description}</p></li>}))                                
             }
 
-            <button>Ocultar Post</button>
+            <button onClick={() => toggletActive(_id)} className={active ? "":"bg-gray-300"}>Ocultar Post</button>
           </section>
         </div>
       </div>

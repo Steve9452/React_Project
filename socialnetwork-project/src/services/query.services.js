@@ -31,6 +31,9 @@ services.like = async (token, _postId) => {
     if(!response.ok){
         alert("Error no es posible realizar dicha acción");
     }
+    else{
+        console.log(response)
+    }
 }
 
 services.patchFav = async (token, _postId) => {
@@ -103,5 +106,21 @@ services.CreatePost = async (token, title, description, image) => {
     }
 
     return {};
+}
+
+services.toggleActive = async (token, _postId) => {
+    const response = await fetch(`${BASE_URL}/post/toggle/${_postId}`,
+    {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        method : "PATCH"
+    });
+    if(!response.ok){
+        alert("Error no es posible realizar dicha acción");
+    }
+    else{
+        console.log(response)
+    }
 }
 export default services;

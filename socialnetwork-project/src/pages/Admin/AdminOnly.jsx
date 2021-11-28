@@ -8,6 +8,8 @@ import { PagControl } from "./PagControls/PagControls";
 import Create from "./Create/Create";
 import Post from './Post/Post'
 
+import queryServices from '../../services/query.services'
+
 export default function AdminOnly() {
     const navigate = useNavigate();
   
@@ -55,6 +57,7 @@ export default function AdminOnly() {
                     likes = {p.likes} 
                     comments = {p.comments}
                     key={p._id}
+                    _id={p._id}
                     
                   />
                 )               

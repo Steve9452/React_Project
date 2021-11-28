@@ -16,6 +16,7 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
 
   const [name, setName] = useState('');
 
+  const [update, setUpdate] = useState(true)
   const setCurrentPage = {
     prev: () => {setPage(page - 1 )},
     next: () => {setPage(page + 1)}
@@ -29,7 +30,7 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
     };
 
     getOwnPost(page);
-  }, [])
+  }, [update])
 
   const onSubmitHandler = (e) => {
     e.preventDefault()
@@ -43,6 +44,11 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
   const handleOnChange = (e, save) => {
     save(e.target.value);
   };
+
+  const toggletActive = async (_id) => {
+    await queryServices.toggleActive(token,_id)
+    setUpdate(!update);
+  }
 
     return(
         <>
@@ -80,6 +86,8 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
                 likeHandler = {likeHandler}
                 patchFav = {patchFav}
                 _id = {p._id}
+                toggletActive = {toggletActive}
+                active ={p.active}
               />
 
           );
