@@ -49,8 +49,8 @@ export default function Admin() {
     next: () => {setPage(page + 1)}
   }
 
-  const likeHandler = (_id) => {
-    queryServices.like(token,_id);
+  const likeHandler = async (_id) => {
+    await queryServices.like(token,_id);
     setUpdate(!update);
 }
   const favHandler = async () => {
@@ -165,6 +165,7 @@ export default function Admin() {
                 key={p._id}
                 likeHandler = {likeHandler}
                 patchFav = {patchFav}
+                _id = {p._id}
               />
 
           );
