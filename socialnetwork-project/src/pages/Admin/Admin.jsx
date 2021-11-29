@@ -31,7 +31,8 @@ export default function Admin() {
 
   const [displayAdminOnly, setDisplayAdminOnly] = useState(false);
   const [displayAddNewComment, setDisplayAddNewComment] = useState(false);
-
+  const [favoriteOnDisplay, setFavoriteOnDisplay] = useState(false)
+  const [homeOnDisplay, setHomeOnDisplay] = useState(true)
   const [postToModify, setPostToModify] = useState({
     _id : 0,
     title : "",
@@ -80,16 +81,19 @@ export default function Admin() {
     const favoritesfetch = await userSevices.getAllFavorites(token);
 
     const newFavoritePosts = []
-    console.log(favoritesfetch);
-    console.log(allposts.length);
-    console.log(favoritesfetch.favorites.length)
+    // console.log(favoritesfetch);
+    // console.log(allposts.length);
+    // console.log(favoritesfetch.favorites.length)
     for (let i = 0; i < allposts.length; i++) {
       if (favoritesfetch.favorites.includes(allposts[i]._id)) {
         newFavoritePosts.push(allposts[i]);
       }
     }
-    console.log(newFavoritePosts);
+    // console.log(newFavoritePosts);
     setPosts(newFavoritePosts);
+    setFavoriteOnDisplay(true);
+    setHomeOnDisplay(false);
+    setDisplayAdminOnly(false);
   };
 
   const OnSearchHandler = async (name) => {
@@ -111,6 +115,9 @@ export default function Admin() {
   const homeHandler = async () => { 
       const data = await queryServices.getAll(token, 10, page);
       setPosts(data.data);
+      setFavoriteOnDisplay(false);
+      setHomeOnDisplay(true);
+      setDisplayAdminOnly(false);
 }
 
   const toggletActive = async (_id) => {
@@ -130,7 +137,8 @@ export default function Admin() {
           <li>
             <button
               onClick={homeHandler}
-              className="flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto"
+              className={
+                homeOnDisplay ? "flex items-center py-2 px-4 bg-blue-300 bg-white rounded-full mr-auto" : "flex items-center py-2 px-4 hover:bg-blue-300 bg-white rounded-full mr-auto"}
             >
               <icon className="text-2xl mr-4 text-left">
                 <FontAwesome.FaHome />
@@ -138,36 +146,28 @@ export default function Admin() {
               <p className="text-lg font-semibold text-left">Home</p>
             </button>
           </li>
-          <li>
-            <button
-              onClick={logoutHandler}
-              className="flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5"
-            >
-              <icon className="text-2xl mr-4 text-left">
-                <FontAwesome.FaSignOutAlt />
-              </icon>
-              <p className="text-lg font-semibold text-left">Logout</p>
-            </button>
-          </li>
+          
           <li>
             <button
               onClick={() => {
-                setDisplayAdminOnly(!displayAdminOnly);
+                setDisplayAdminOnly(true);
+                setHomeOnDisplay(false);
+                setFavoriteOnDisplay(false);
                 setUpdate(!update);
               }}
               className={
                 displayAdminOnly
-                  ? 'flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5 bg-blue-300'
-                  : 'flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5'
+                  ? 'flex items-center py-2 px-4 bg-blue-300 rounded-full mr-auto my-5'
+                  : 'flex items-center py-2 px-4 hover:bg-blue-300 rounded-full mr-auto my-5'
               }
             >
               <icon className="text-2xl mr-4 text-left">
-                <FontAwesome.FaSignOutAlt />
+                <FontAwesome.FaUserShield />
               </icon>
               <p className="text-lg font-semibold text-left">Administracion</p>
             </button>
           </li>
-          <li>
+          {/* <li>
             <button
               onClick={() => {
                 console.log(posts);
@@ -175,9 +175,29 @@ export default function Admin() {
             >
               ConsoleTest
             </button>
+          </li> */}
+          <li>
+            <button
+              onClick={favHandler}
+              className={
+                favoriteOnDisplay ? "flex items-center py-2 px-4 bg-blue-300 bg-white rounded-full mr-auto" : "flex items-center py-2 px-4 hover:bg-blue-300 bg-white rounded-full mr-auto"}
+            >
+              <icon className="text-2xl mr-4 text-left">
+                <FontAwesome.FaStar />
+              </icon>
+              <p className="text-lg font-semibold text-left">Favoritos</p>
+            </button>
           </li>
           <li>
-            <button onClick={favHandler}>MostrarFavs</button>
+            <button
+              onClick={logoutHandler}
+              className="flex items-center py-2 px-4 hover:bg-blue-300 bg-white rounded-full mr-auto my-5"
+            >
+              <icon className="text-2xl mr-4 text-left">
+                <FontAwesome.FaSignOutAlt />
+              </icon>
+              <p className="text-lg font-semibold text-left">Logout</p>
+            </button>
           </li>
         </ol>
       </nav>
@@ -238,7 +258,7 @@ export default function Admin() {
           className="rounded-full w-full p-2 bg-lighter ml-10 bg-gray-200 border-gray-200"
           placeholder="Buscar Favorito"
         />
-        <button className="flex self-center m-auto py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5 bg-blue-300">
+        <button className="flex self-center text-white m-auto py-2 px-4 hover:bg-blue-500 bg-blue-400 rounded-full mr-auto my-5 ">
           Buscar
         </button>
       </div>

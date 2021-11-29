@@ -17,18 +17,18 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
   return (
     <li className="w-full p-4 hover:bg-lighter flex border-b-2">
       <section>
-        <h2 className="font-semibold text-dark ml-2">{userName}</h2>
+        <h2 className="font-semibold text-dark ml-2">@{userName}</h2>
       </section>
 
       <div>
-        <h3 className="font-semibold text-dark ml-2">{title}</h3>
+        <h3 className="pl-10 font-semibold text-dark ml-2">{title}</h3>
 
         <div className="flex ">
           <img
             src={img ?? notFoundImg}
-            className="w-20 h-20 mr-10 mb-5 mt-10"
+            className="w-40 h-40 mr-40 mb-5 mt-10"
           />
-          <p className="py-2 mb-10 mt-5">{description}</p>
+          <p className="pt-10 py-2 mb-10 mt-5">{description}</p>
         </div>
 
         <div className="flex items-center justify-between w-full">
@@ -46,7 +46,7 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
               <FontAwesome.FaHeart />
               {likes.length}
             </p>
-            <button
+            <button  className="hover:bg-blue-400 bg-white hover:text-white rounded py-2 px-2"
               onClick={() => {
                 patchFav(_id);
               }}
@@ -55,7 +55,8 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
             </button>
             <div className="flex items-center justify-between">
               <FontAwesome.FaComment className="mr-5" />
-              <button onClick={() => settoggleComments(!toggleComments)}>
+              <button className="hover:bg-blue-400 bg-white hover:text-white rounded py-2 px-2" 
+                onClick={() => settoggleComments(!toggleComments)}>
                 Ver comentarios
               </button>            
             </div>
@@ -65,7 +66,8 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
                 <FontAwesome.FaComment className="mr-5" />
 
                 
-                <button onClick = {() => {
+                <button className="hover:bg-blue-400 bg-white hover:text-white rounded py-2 px-2"
+                 onClick = {() => {
                   setDisplayNewCommentMod(true)
                   setPostToModify(
                     {
@@ -81,9 +83,10 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
             }
             
 
-            <div className="flex items-center justify-between">
+            
               {isModifiedAble && (
-                <button
+                <div className="flex items-center justify-between">
+                <button className="hover:bg-blue-400 bg-white hover:text-white rounded py-2 px-2"
                   onClick={() => {
                     setDisplayModule(true);
                     setPostToModify({
@@ -96,12 +99,13 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
                 >
                   Edit
                 </button>
+                </div>
               )}
-            </div>
+            
 
-            <button
+            <button 
               onClick={() => toggletActive(_id)}
-              className={active ? '' : 'bg-gray-300'}
+              className={active ? "hover:bg-gray-300 bg-white rounded py-2 px-2" : 'hover:bg-gray-300 rounded py-2 px-2 bg-gray-400'}
             >
               Ocultar Post
             </button>
