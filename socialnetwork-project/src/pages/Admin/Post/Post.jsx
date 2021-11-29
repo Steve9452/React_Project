@@ -3,10 +3,23 @@ import { useUserContext } from '../../../context/UserContext';
 import queryServices from '../../../services/query.services';
 import * as FontAwesome from 'react-icons/fa';
 
-import AdminOnly from "../AdminOnly";
-const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, patchFav, toggletActive, active, isModifiedAble, setDisplayModule,setPostToModify}) => {
-
-  
+import AdminOnly from '../AdminOnly';
+const Post = ({
+  _id,
+  userName,
+  title,
+  img,
+  likes,
+  description,
+  comments,
+  likeHandler,
+  patchFav,
+  toggletActive,
+  active,
+  isModifiedAble,
+  setDisplayModule,
+  setPostToModify,
+}) => {
   // const {userName, title, img, likes, description} = post;
   const [toggleComments, settoggleComments] = useState(false);
 
@@ -57,24 +70,26 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
               <FontAwesome.FaComment className="mr-5" />
               <button onClick={() => settoggleComments(!toggleComments)}>
                 Ver comentarios
-              </button>             
+              </button>
             </div>
 
             <div className="flex items-center justify-between">
-              {isModifiedAble && <button onClick={() => 
-                  {
-                    setDisplayModule(true)
-                    setPostToModify(
-                      {
-                        _id:_id,
-                        title:title,
-                        img: img,
-                        description : description
-                      })
-                    } }>Edit</button>}
+              {isModifiedAble && (
+                <button
+                  onClick={() => {
+                    setDisplayModule(true);
+                    setPostToModify({
+                      _id: _id,
+                      title: title,
+                      img: img,
+                      description: description,
+                    });
+                  }}
+                >
+                  Edit
+                </button>
+              )}
             </div>
-
-            
 
             <button
               onClick={() => toggletActive(_id)}
@@ -83,20 +98,20 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
               Ocultar Post
             </button>
           </section>
-
-          
         </div>
-        <div className="flex flex-col bg-gray-200">
-            {toggleComments &&
-                comments.map((com) => {
-                  return (
-                    <li clasName = "flex flex-row" key={Date.now()}>
-                      <p>{com.user.username}</p>
-                      <p>{com.description}</p>
-                    </li>
-                  );
-                })}
-          </div>
+        <div className="flex flex-col align-items items-start w-48 divide-y">
+          {toggleComments &&
+            comments.map((com) => {
+              return (
+                <li classname="" key={Date.now()}>
+                  <div className="bg-pink-200 px-4 py-2 rounded w-full">
+                    <p className="font-bold">{com.user.username}</p>
+                    <p>{com.description}</p>
+                  </div>
+                </li>
+              );
+            })}
+        </div>
       </div>
     </li>
   );
