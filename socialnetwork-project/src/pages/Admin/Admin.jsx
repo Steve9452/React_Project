@@ -48,6 +48,15 @@ export default function Admin() {
     getPosts(page);
   }, [page, token, update]);
 
+  useEffect(() => {
+    const getPosts = async () => {
+      const data = await queryServices.getAll(token, 500, 0);
+      setAllPosts(data.data);
+    };
+
+    getPosts();
+  }, [token])
+
   //Funct
 
   const logoutHandler = () => {
@@ -70,19 +79,17 @@ export default function Admin() {
   const favHandler = async () => {
     const favoritesfetch = await userSevices.getAllFavorites(token);
 
-    const newFavoritePosts = [];
-    /*
+    const newFavoritePosts = []
     console.log(favoritesfetch);
     console.log(allposts.length);
     console.log(favoritesfetch.favorites.length)
-    */
     for (let i = 0; i < allposts.length; i++) {
       if (favoritesfetch.favorites.includes(allposts[i]._id)) {
         newFavoritePosts.push(allposts[i]);
       }
     }
     console.log(newFavoritePosts);
-    setFavoritePosts(newFavoritePosts);
+    setPosts(newFavoritePosts);
   };
 
   const OnSearchHandler = async (name) => {
@@ -101,9 +108,10 @@ export default function Admin() {
     // setUpdate(!update);
   };
 
-  const getAllFavs = (_id) => {
-    queryServices.getFavs(token, _id);
-  };
+  const homeHandler = async () => { 
+      const data = await queryServices.getAll(token, 10, page);
+      setPosts(data.data);
+}
 
   const toggletActive = async (_id) => {
     await queryServices.toggleActive(token, _id);
@@ -121,9 +129,7 @@ export default function Admin() {
         <ol>
           <li>
             <button
-              onClick={() => {
-                console.log(posts);
-              }}
+              onClick={homeHandler}
               className="flex items-center py-2 px-4 hover:bg-pink-100 rounded-full mr-auto"
             >
               <icon className="text-2xl mr-4 text-left">
@@ -171,7 +177,7 @@ export default function Admin() {
             </button>
           </li>
           <li>
-            <button onClick={getAllFavs}>MostrarFavs</button>
+            <button onClick={favHandler}>MostrarFavs</button>
           </li>
         </ol>
       </nav>
