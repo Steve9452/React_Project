@@ -111,7 +111,7 @@ services.toggleActive = async (token, _postId) => {
         method : "PATCH"
     });
     if(!response.ok){
-        alert("Error no es posible realizar dicha acción");
+        alert("Error el post que desea ocultar no pertenece a su dominio");
     }
     else{
         console.log(response)

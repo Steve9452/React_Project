@@ -105,14 +105,12 @@ export default function Admin() {
         getId = allposts[i]._id;
       }
     }
-    console.log(getId);
-
+    if(getId){
       const Post = await userSevices.getOne(token, getId);
-      console.log(Post);
-
-      alert("Post no encontrado")
-
-    setSearchedPost(Post);
+      setSearchedPost(Post);
+    }else{
+      window.alert("No se encontro el post");
+    }
   };
 
   const patchFav = (_id) => {
@@ -132,10 +130,6 @@ export default function Admin() {
     await queryServices.toggleActive(token, _id);
     setUpdate(!update);
   };
-
-  // const renderPosts = filterPost.map( (post) => {
-  //   <Post userName = {post.userName} title = {post.title} img = {post.img} like = {post.likes} description = {post.description}></Post>
-  // });
 
   return (
     <div className="flex container h-screen w-full">
@@ -219,6 +213,7 @@ export default function Admin() {
 
         {
               searchedpost &&
+              <div className="bg-blue-200 rounded-lg h-3/8">
               <Post className="w-full p-4 border-b hover:bg-lighter flex"
                 userName={searchedpost.user.username}
                 title={searchedpost.title}
@@ -235,7 +230,10 @@ export default function Admin() {
                 active = {searchedpost.active}
                 isModifiedAble ={false}
                 setDisplayModule = {() => {}}
+                setPostToModify = {setPostToModify}
+                setDisplayNewCommentMod = {setDisplayAddNewComment}
             />
+            </div>
                                
               }
               
