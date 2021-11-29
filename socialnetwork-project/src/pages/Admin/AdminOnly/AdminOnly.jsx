@@ -10,23 +10,19 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
   const [page, setPage] = useState(0);
 
   const [posts, setPosts] = useState([])
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [img, setImg] = useState("")
 
-  const [name, setName] = useState('');
-
   const [update, setUpdate] = useState(true);
-
-  const [displayModule, setDisplayModule] = useState(false);  
-
+  const [displayModule, setDisplayModule] = useState(false);
   const [postToModify, setPostToModify] = useState({
     _id : 0,
     title : "",
     img : "",
     description : ""
   })
+  
   useEffect(() => {
     
     const getOwnPost = async (currentPage) => {

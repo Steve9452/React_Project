@@ -20,11 +20,10 @@ const UpdateModule = ({token, displayModule, setDisplayModule, _id, title, descr
         setDisplayModule(false);
         renderMainPage(!renderMainPageStatus);
       };
+      
     return(
-
         <>  
-            {
-                
+            {                
                 displayModule && 
                 <div name="Overlay" className="w-screen h-screen fixed top-0 left-0 bg-gray-700 bg-opacity-60 z-10 flex items-center justify-center">
                     <form onSubmit={onSubmitHandler} className="p-20 shadow-lg relative bg-white top-0 left-0 w-2/4 h-3/4 z-20 rounded-3xl flex justify-center flex-col space-y-20">

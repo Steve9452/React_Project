@@ -1,19 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useUserContext } from '../../../context/UserContext';
-import queryServices from '../../../services/query.services';
+import { useState } from 'react';
 import * as FontAwesome from 'react-icons/fa';
 
-import AdminOnly from "../AdminOnly";
 const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, patchFav, toggletActive, active, isModifiedAble, setDisplayModule,setPostToModify, setDisplayNewCommentMod}) => {
 
-  
-  // const {userName, title, img, likes, description} = post;
   const [toggleComments, settoggleComments] = useState(false);
 
-  // const [likes, setLikes] = useState(0);
-  // const {userName, title, img, likes, description} = post;
-  const notFoundImg =
+
+  const notFoundImg = 
     'https://1080motion.com/wp-content/uploads/2018/06/NoImageFound.jpg.png';
+
   return (
     <li className="w-full p-4 hover:bg-lighter flex border-b-2">
       <section>
@@ -81,28 +76,27 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
                 </button>            
               </div>
             }
+              {
+              isModifiedAble && 
+                (
+                  <div className="flex items-center justify-between">
+                  <button className="hover:bg-blue-400 bg-white hover:text-white rounded py-2 px-2"
+                    onClick={() => {
+                      setDisplayModule(true);
+                      setPostToModify({
+                        _id: _id,
+                        title: title,
+                        img: img,
+                        description: description,
+                      });
+                    }}
+                  >
+                    Edit
+                  </button>
+                  </div>
+                )
+              }
             
-
-            
-              {isModifiedAble && (
-                <div className="flex items-center justify-between">
-                <button className="hover:bg-blue-400 bg-white hover:text-white rounded py-2 px-2"
-                  onClick={() => {
-                    setDisplayModule(true);
-                    setPostToModify({
-                      _id: _id,
-                      title: title,
-                      img: img,
-                      description: description,
-                    });
-                  }}
-                >
-                  Edit
-                </button>
-                </div>
-              )}
-            
-
             <button 
               onClick={() => toggletActive(_id)}
               className={active ? "hover:bg-gray-300 bg-white rounded py-2 px-2" : 'hover:bg-gray-300 rounded py-2 px-2 bg-gray-400'}
@@ -111,13 +105,17 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
             </button>
           </section>
         </div>
-        {toggleComments && <hr className="pb-8"/>}
+        
+        {
+        toggleComments && <hr className="pb-8"/>
+        }
         <div className="pt-3 flex flex-col align-items items-start w-48 w-3/5">
         
           <ol className="flex flex-col space-y-5">
           
-            {toggleComments && (
-                  
+            {
+              toggleComments && 
+                (
                   comments.map((com) => {
                     return (
                       <li className = "flex flex-col bg-red" key={'_' + Math.random().toString(36).substr(2, 9)}>
@@ -127,9 +125,10 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
                         </div>
                       </li>
                     )
-                  }))  }
-          </ol>
-            
+                  })
+                ) 
+            }
+          </ol>           
           </div>
       </div>
     </li>
