@@ -9,10 +9,16 @@ const Search = ({ onSearch = () => {} }) => {
   }
   
   return (
-    <form onSubmit={onSubmitHandler}>
-      <input className="border-2 border-blue-400" type="text" value={name} onChange={(e) => { setName(e.target.value) }} />
-      <button type="submit"> Buscar </button>
-    </form>
+      <form onSubmit={onSubmitHandler}>
+        <input
+          type="text" value={name} onChange={(e) => { setName(e.target.value) }}
+          className="rounded-full w-full p-2 bg-lighter ml-10 bg-gray-200 border-gray-200"
+          placeholder="Buscar Favorito"
+        />
+        <button type="submit" className="flex self-center m-auto py-2 px-4 hover:bg-pink-100 rounded-full mr-auto my-5 bg-blue-300">
+          Buscar
+        </button>
+      </form>
   );
 }
 
