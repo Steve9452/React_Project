@@ -1,5 +1,4 @@
 import { useUserContext } from "../../context/UserContext";
-import { useNavigate } from "react-router-dom";
 import userService from "../../services/user.services.js"
 
 import React,{ useState, useEffect } from "react";
@@ -8,10 +7,8 @@ import { PagControl } from "./PagControls/PagControls";
 import Create from "./Create/Create";
 import Post from './Post/Post'
 
-import queryServices from '../../services/query.services'
 
 export default function AdminOnly() {
-    const navigate = useNavigate();
   
     const {logout , token} = useUserContext();
     const [posts, setPosts] = useState([])

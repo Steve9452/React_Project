@@ -1,6 +1,4 @@
 import { useUserContext } from '../../context/UserContext';
-import { useNavigate } from 'react-router-dom';
-
 import queryServices from '../../services/query.services.js';
 
 import React, { useState, useEffect } from 'react';
@@ -12,19 +10,16 @@ import Search from './Search/Search';
 import userSevices from '../../services/user.services';
 import * as FontAwesome from 'react-icons/fa';
 
-import { Navigate } from 'react-router';
 import AdminOnly from './AdminOnly/AdminOnly';
 import AddCommentmodule from './AddCommentModule/AddCommentModule';
 
 export default function Admin() {
-  const navigate = useNavigate();
 
   const { logout, token } = useUserContext();
 
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(0);
   const [allposts, setAllPosts] = useState([]);
-  const [favoriteposts, setFavoritePosts] = useState([]);
   const [searchedpost, setSearchedPost] = useState(undefined);
 
   const [update, setUpdate] = useState(true);

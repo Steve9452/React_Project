@@ -1,5 +1,4 @@
 import Post from '../Post/Post'
-import { PagControl } from '../PagControls/PagControls';
 
 import queryServices from '../../../services/query.services'
 import { useState, useEffect } from 'react';

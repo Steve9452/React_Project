@@ -132,6 +132,9 @@ services.UpdatePost = async (token, _postId, title, description, image) => {
             image: image
         })
     });
+    if(!response.ok){
+        alert("Error no fue posible realizar dicha acción")
+    }
 }
 
 services.AddNewComment = async (token, _postId, description) => {
