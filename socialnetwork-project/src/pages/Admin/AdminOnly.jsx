@@ -10,7 +10,7 @@ import Post from './Post/Post'
 
 export default function AdminOnly() {
   
-    const {logout , token} = useUserContext();
+    const {token} = useUserContext();
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(0)
 
