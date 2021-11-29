@@ -32,7 +32,7 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
         </div>
 
         <div className="flex items-center justify-between w-full">
-          <section className="flex items-center text-sm text-dark space-x-20">
+          <section className="flex items-center text-sm text-dark space-x-20 pb-5">
             <button
               className="hover:bg-pink-800 hover:text-white rounded py-2 px-2"
               onClick={() => {
@@ -82,20 +82,22 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
             
 
             <div className="flex items-center justify-between">
-              {isModifiedAble && <button onClick={() => 
-                  {
-                    setDisplayModule(true)
-                    setPostToModify(
-                      {
-                        _id:_id,
-                        title:title,
-                        img: img,
-                        description : description
-                      })
-                    } }>Edit</button>}
+              {isModifiedAble && (
+                <button
+                  onClick={() => {
+                    setDisplayModule(true);
+                    setPostToModify({
+                      _id: _id,
+                      title: title,
+                      img: img,
+                      description: description,
+                    });
+                  }}
+                >
+                  Edit
+                </button>
+              )}
             </div>
-
-            
 
             <button
               onClick={() => toggletActive(_id)}
@@ -104,18 +106,21 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
               Ocultar Post
             </button>
           </section>
-
-          
         </div>
-        <div className="flex flex-col bg-gray-200">
-          <ol>
+        {toggleComments && <hr className="pb-8"/>}
+        <div className="pt-3 flex flex-col align-items items-start w-48 w-3/5">
+        
+          <ol className="flex flex-col space-y-5">
+          
             {toggleComments && (
                   
                   comments.map((com) => {
                     return (
-                      <li className = "flex flex-row" key={'_' + Math.random().toString(36).substr(2, 9)}>
-                        <p>{com.user.username}</p>
+                      <li className = "flex flex-col bg-red" key={'_' + Math.random().toString(36).substr(2, 9)}>
+                        <div className="bg-gray-200 px-4 py-2 rounded w-full">
+                        <p className="font-bold">{com.user.username}</p>
                         <p>{com.description}</p>
+                        </div>
                       </li>
                     )
                   }))  }
