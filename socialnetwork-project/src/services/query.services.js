@@ -119,7 +119,6 @@ services.toggleActive = async (token, _postId) => {
 }
 
 services.UpdatePost = async (token, _postId, title, description, image) => {
-    console.log(token + "\n" + _postId + "\n" +title + "\n" +description + "\n" +image)
     const response = await fetch (`${BASE_URL}/post/update/${_postId}`,
     {
         headers: {
