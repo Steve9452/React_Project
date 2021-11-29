@@ -92,10 +92,12 @@ export default function Admin() {
         getId = allposts[i]._id;
       }
     }
-    console.log(getId);
-    const Post = await userSevices.getOne(token, getId);
-    console.log(Post);
-    setSearchedPost(Post);
+    if(getId){
+      const Post = await userSevices.getOne(token, getId);
+      setSearchedPost(Post);
+    }else{
+      window.alert("No se encontro el post");
+    }
   };
 
   const patchFav = (_id) => {
