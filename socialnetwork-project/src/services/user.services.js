@@ -84,7 +84,8 @@ services.getOne = async (token, id) => {
     {
         headers: {
             "Authorization": `Bearer ${token}`
-        }
+        },
+        method: "GET"
     });
 
     if(response.ok){

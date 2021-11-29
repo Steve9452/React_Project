@@ -98,12 +98,20 @@ export default function Admin() {
 
   const OnSearchHandler = async (name) => {
     let getId = undefined;
+    console.log(name);
     for (let i = 0; i < allposts.length; i++) {
+      console.log(allposts[i]._id);
       if (allposts[i].title === name) {
         getId = allposts[i]._id;
       }
     }
-    const Post = await userSevices.getOne(token, getId);
+    console.log(getId);
+
+      const Post = await userSevices.getOne(token, getId);
+      console.log(Post);
+
+      alert("Post no encontrado")
+
     setSearchedPost(Post);
   };
 
@@ -208,6 +216,28 @@ export default function Admin() {
             <FontAwesome.FaNewspaper />
           </icon>
         </div>
+
+        {
+              searchedpost &&
+              <Post className="w-full p-4 border-b hover:bg-lighter flex"
+                userName={searchedpost.user.username}
+                title={searchedpost.title}
+                userName={searchedpost.user.username}
+                img={searchedpost.image}
+                description={searchedpost.description}
+                likes={searchedpost.likes}
+                comments={searchedpost.comments}
+                key={searchedpost._id}
+                likeHandler = {likeHandler}
+                patchFav = {patchFav}
+                toggletActive = {toggletActive}
+                _id = {searchedpost._id}
+                active = {searchedpost.active}
+                isModifiedAble ={false}
+                setDisplayModule = {() => {}}
+            />
+                               
+              }
               
         {
           displayAdminOnly && 
@@ -254,13 +284,14 @@ export default function Admin() {
         
       </ul>
       <div className=" w-1/6 h-full border-l border-lighter py-2 my-5">
-        <input
+        {/* <input
           className="rounded-full w-full p-2 bg-lighter ml-10 bg-gray-200 border-gray-200"
           placeholder="Buscar Favorito"
         />
         <button className="flex self-center text-white m-auto py-2 px-4 hover:bg-blue-500 bg-blue-400 rounded-full mr-auto my-5 ">
           Buscar
-        </button>
+        </button> */}
+        <Search onSearch={OnSearchHandler} />
       </div>
       <PagControl
         nextPage={setCurrentPage.next}
