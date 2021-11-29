@@ -133,4 +133,21 @@ services.UpdatePost = async (token, _postId, title, description, image) => {
         })
     });
 }
+
+services.AddNewComment = async (token, _postId, description) => {
+    const response = await fetch(`${BASE_URL}/post/comment/${_postId}`,
+    {
+        headers: {
+            "Content-Type" : "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        method : "PATCH",
+        body: JSON.stringify({
+            description:description
+        })
+    });
+    if(!response.ok){
+        alert("Error no es posible realizar dicha acción");
+    }
+}
 export default services;

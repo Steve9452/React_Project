@@ -98,6 +98,7 @@ const AdminOnly = ({token, likeHandler, patchFav}) => {
                 isModifiedAble={true}
                 setDisplayModule ={setDisplayModule}
                 setPostToModify = {setPostToModify}
+                setDisplayNewCommentMod = {() => {}}
               />
           );
         })}

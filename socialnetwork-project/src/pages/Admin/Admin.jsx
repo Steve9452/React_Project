@@ -14,6 +14,7 @@ import * as FontAwesome from 'react-icons/fa';
 
 import { Navigate } from 'react-router';
 import AdminOnly from './AdminOnly/AdminOnly';
+import AddCommentmodule from './AddCommentModule/AddCommentModule';
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -29,6 +30,14 @@ export default function Admin() {
   const [update, setUpdate] = useState(true);
 
   const [displayAdminOnly, setDisplayAdminOnly] = useState(false);
+  const [displayAddNewComment, setDisplayAddNewComment] = useState(false);
+
+  const [postToModify, setPostToModify] = useState({
+    _id : 0,
+    title : "",
+    img : "",
+    description : ""
+  })
 
   useEffect(() => {
     const getPosts = async (currentPage) => {
@@ -107,6 +116,7 @@ export default function Admin() {
 
   return (
     <div className="flex container h-screen w-full">
+      <AddCommentmodule _id={postToModify._id}  token={token} renderMainPage={setUpdate} renderMainPageStatus={update} displayModule={displayAddNewComment} setDisplayModule={setDisplayAddNewComment}/>
       <nav className="lg:w-1/5 border-r border-lighter lpx-2 g:px-8 py-10 my-0 mx-0">
         <ol>
           <li>
@@ -203,6 +213,8 @@ export default function Admin() {
                     active = {p.active}
                     isModifiedAble ={false}
                     setDisplayModule = {() => {}}
+                    setPostToModify = {setPostToModify}
+                    setDisplayNewCommentMod = {setDisplayAddNewComment}
                   />
 
                 );

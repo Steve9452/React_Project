@@ -4,7 +4,7 @@ import queryServices from '../../../services/query.services';
 import * as FontAwesome from 'react-icons/fa';
 
 import AdminOnly from "../AdminOnly";
-const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, patchFav, toggletActive, active, isModifiedAble, setDisplayModule,setPostToModify}) => {
+const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, patchFav, toggletActive, active, isModifiedAble, setDisplayModule,setPostToModify, setDisplayNewCommentMod}) => {
 
   
   // const {userName, title, img, likes, description} = post;
@@ -57,8 +57,29 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
               <FontAwesome.FaComment className="mr-5" />
               <button onClick={() => settoggleComments(!toggleComments)}>
                 Ver comentarios
-              </button>             
+              </button>            
             </div>
+            
+            {!isModifiedAble && 
+              <div className="flex items-center justify-between">
+                <FontAwesome.FaComment className="mr-5" />
+
+                
+                <button onClick = {() => {
+                  setDisplayNewCommentMod(true)
+                  setPostToModify(
+                    {
+                      _id:_id,
+                      title:title,
+                      img: img,
+                      description : description
+                    })
+                  }}>
+                  Añadir Comentario
+                </button>            
+              </div>
+            }
+            
 
             <div className="flex items-center justify-between">
               {isModifiedAble && <button onClick={() => 
@@ -87,15 +108,19 @@ const Post = ({_id,userName,title,img,likes,description, comments, likeHandler, 
           
         </div>
         <div className="flex flex-col bg-gray-200">
-            {toggleComments &&
-                comments.map((com) => {
-                  return (
-                    <li clasName = "flex flex-row" key={Date.now()}>
-                      <p>{com.user.username}</p>
-                      <p>{com.description}</p>
-                    </li>
-                  );
-                })}
+          <ol>
+            {toggleComments && (
+                  
+                  comments.map((com) => {
+                    return (
+                      <li className = "flex flex-row" key={'_' + Math.random().toString(36).substr(2, 9)}>
+                        <p>{com.user.username}</p>
+                        <p>{com.description}</p>
+                      </li>
+                    )
+                  }))  }
+          </ol>
+            
           </div>
       </div>
     </li>
