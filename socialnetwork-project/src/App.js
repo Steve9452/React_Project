@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 
 import Login from './pages/Login/Login';
 import User from './pages/User/User';
@@ -11,7 +11,7 @@ import Private from './Components/PrivateRoute/PrivateRoute'
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>        
         <Route path="/login" element={<Login />} />
         <Route path="/redirect" element={<RedirectUser />}/>
@@ -21,7 +21,7 @@ function App() {
         
         <Route path="*" element={<NotFound />}/>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
